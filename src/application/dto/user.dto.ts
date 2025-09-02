@@ -1,12 +1,14 @@
 import { User } from "domain/entities/user";
 import { PermissionDto } from "./permission.dto";
 import { RoleDto } from "./role.dto";
+import { Email } from "domain/value-objects/email";
+import { Password } from "domain/value-objects/password";
 
 export function toUserDocumentDto(doc: any): User {
   return new User(
     doc._id.toString(),
-    doc.email, // Should be Email instance
-    doc.password, // Should be Password instance
+    Email.create(doc.email),
+    Password.fromHash(doc.password),
     doc.firstName,
     doc.lastName,
     doc.avatar,

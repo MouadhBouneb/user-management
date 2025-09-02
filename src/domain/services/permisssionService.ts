@@ -1,15 +1,18 @@
 import { User } from "../entities/user";
-import { IRoleRepository } from "../repositories/iRoleRepository";
 
-class PermissionService {
-  constructor(private roleRepo: IRoleRepository) {}
+export class PermissionService {
+  constructor() {}
 
   async userHasPermission(user: User, permission: string): Promise<boolean> {
     // Check direct user permissions
+    const hasDirectPermission = user.permissions.some(p => p.action === permission);
+    if (hasDirectPermission) return true;
+    
     // Check permissions from roles
-    return (
-      user.permissions.includes(permission) ||
-      user.roles.some((rolePerm) => rolePerm === permission)
+    const hasRolePermission = user.roles.some(role => 
+      role.permissions.some(p => p.action === permission)
     );
+    
+    return hasRolePermission;
   }
 }

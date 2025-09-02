@@ -6,4 +6,5 @@ export interface IPermissionRepository {
   findByName(name: string): Promise<Permission | null>;
   update(permission: Permission): Promise<Permission>;
   delete(id: string): Promise<void>;
+  findAll(): Promise<Permission[]>;
 }

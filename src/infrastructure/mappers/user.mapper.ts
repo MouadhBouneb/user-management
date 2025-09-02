@@ -43,10 +43,10 @@ createMap(
     (dest) => dest.email,
     mapFrom((src) => Email.create(src.email))
   ),
-  //   forMember(
-  //   (dest) => dest.password,
-  //   mapFrom((src) => Password.create(src.password))
-  // ),
+  forMember(
+    (dest) => dest.password,
+    mapFrom(async (src) => await Password.create(src.password))
+  ),
   forMember(
     (dest) => dest.roles,
     mapFrom((src) => src.roles ?? [])

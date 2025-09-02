@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "target": "es2022", // Output JavaScript will use ES2022 features
+    "module": "commonjs", // Use CommonJS modules (Node.js default)
+    "rootDir": "./src", // All source files are under src/
+    "outDir": "./dist", // Compiled files go to dist/
+    "strict": true, // Enable all strict type-checking options
+    "esModuleInterop": true, // Allow default imports from CommonJS modules
+    "skipLibCheck": true, // Skip type checking of declaration files
+    "forceConsistentCasingInFileNames": true, // Enforce consistent file name casing
+    "resolveJsonModule": true, // Allow importing .json files
+    "moduleResolution": "node", // Use Node.js module resolution
+    "baseUrl": "./src", // Base directory for non-relative imports
+    "typeRoots": [
+      "./src/shared/types", // Custom type definitions
+      "./node_modules/@types" // Default type definitions
+    ],
+    "paths": {
+      "config/*": ["config/*"], // Alias for src/config/*
+      "modules/*": ["modules/*"], // Alias for src/modules/*
+      "shared/*": ["shared/*"], // Alias for src/shared/*
+      "utils/*": ["utils/*"] // Alias for src/utils/*
+    },
+    "sourceMap": true,            // Useful for debugging TS in Node
+    "noUnusedLocals": false,       // Warn if variables are declared but not used
+    "noUnusedParameters": false,   // Warn if function args are never used
+    "noImplicitReturns": true,    // Ensure all code paths return a value
+    "noFallthroughCasesInSwitch": true, // Safer switch statements
+        "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+  },
+  "include": ["src"], // Only compile files in src/
+  "exclude": ["node_modules", "dist"] // Exclude node_modules and dist from compilation
+}

@@ -12,7 +12,6 @@
   "author": "mouadh bouneb",
   "license": "ISC",
   "devDependencies": {
-    "@types/bcrypt": "^6.0.0",
     "@types/express": "^5.0.3",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/mongoose": "^5.11.97",

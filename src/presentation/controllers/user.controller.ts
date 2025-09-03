@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { UserRepository } from "../../infrastructure/repositories/user.repository";
+import { RoleRepository } from "../../infrastructure/repositories/role.repository";
+import { PermissionRepository } from "../../infrastructure/repositories/permission.repository";
 import { User } from "../../domain/entities/user";
 import { Email } from "../../domain/value-objects/email";
 import { Password } from "../../domain/value-objects/password";
@@ -12,6 +14,8 @@ import { UpdateUserUseCase } from "application/use-cases/user/updateUser.useCase
 import { DeleteUserUseCase } from "application/use-cases/user/deleteUser.useCase";
 
 const userRepo = new UserRepository();
+const roleRepo = new RoleRepository();
+const permissionRepo = new PermissionRepository();
 
 export const createUserController = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -21,7 +25,7 @@ export const createUserController = CatchAsyncError(
     const existing = await userRepo.findByEmail(createUserDto.email);
     if (existing) return next(new ErrorHandler("Email already exists", 400));
     
-    const useCase = new CreateUserUseCase(userRepo);
+    const useCase = new CreateUserUseCase(userRepo, roleRepo, permissionRepo);
     const savedUser = await useCase.execute(createUserDto);
     res.status(201).json({ message: "User created", data: savedUser });
   }

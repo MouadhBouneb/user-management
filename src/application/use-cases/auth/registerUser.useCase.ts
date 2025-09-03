@@ -4,8 +4,6 @@ import { Password } from "domain/value-objects/password";
 import { User } from "domain/entities/user";
 import { v4 as uuidv4 } from "uuid";
 import { RegisterUserDTO } from "application/dto/auth.dto";
-import { Email } from "domain/value-objects/email";
-import { Password } from "domain/value-objects/password";
 
 export class RegisterUserUseCase {
   constructor(private readonly userRepo: IUserRepository) {}

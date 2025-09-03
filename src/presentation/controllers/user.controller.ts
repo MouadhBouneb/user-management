@@ -13,9 +13,9 @@ import { GetUserByIdUseCase } from "application/use-cases/user/getUserById.useCa
 import { UpdateUserUseCase } from "application/use-cases/user/updateUser.useCase";
 import { DeleteUserUseCase } from "application/use-cases/user/deleteUser.useCase";
 
-const userRepo = new UserRepository();
-const roleRepo = new RoleRepository();
 const permissionRepo = new PermissionRepository();
+const roleRepo = new RoleRepository(permissionRepo);
+const userRepo = new UserRepository();
 
 export const createUserController = CatchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {

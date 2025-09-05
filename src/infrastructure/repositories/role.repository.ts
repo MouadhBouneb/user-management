@@ -8,9 +8,8 @@ export class RoleRepository implements IRoleRepository {
 
   async create(role: Role): Promise<Role> {
     const doc = await RoleModel.create({
-      _id: role.id,
       name: role.name,
-      permissions: role.permissions.map(p => p.id),
+      permissions: role.permissions.map((p) => p.id),
     });
     return new Role(doc._id.toString(), doc.name, role.permissions);
   }
@@ -18,30 +17,30 @@ export class RoleRepository implements IRoleRepository {
   async findById(id: string): Promise<Role | null> {
     const doc = await RoleModel.findById(id).lean();
     if (!doc) return null;
-    
+
     const permissions = await Promise.all(
-      doc.permissions.map(permId => this.permissionRepo.findById(permId))
+      doc.permissions.map((permId) => this.permissionRepo.findById(permId))
     );
-    
+
     return new Role(
-      doc._id.toString(), 
-      doc.name, 
-      permissions.filter(p => p !== null)
+      doc._id.toString(),
+      doc.name,
+      permissions.filter((p) => p !== null)
     );
   }
 
   async findByName(name: string): Promise<Role | null> {
     const doc = await RoleModel.findOne({ name }).lean();
     if (!doc) return null;
-    
+
     const permissions = await Promise.all(
-      doc.permissions.map(permId => this.permissionRepo.findById(permId))
+      doc.permissions.map((permId) => this.permissionRepo.findById(permId))
     );
-    
+
     return new Role(
-      doc._id.toString(), 
-      doc.name, 
-      permissions.filter(p => p !== null)
+      doc._id.toString(),
+      doc.name,
+      permissions.filter((p) => p !== null)
     );
   }
 
@@ -50,7 +49,7 @@ export class RoleRepository implements IRoleRepository {
       role.id,
       {
         name: role.name,
-        permissions: role.permissions.map(p => p.id),
+        permissions: role.permissions.map((p) => p.id),
       },
       { new: true }
     );
@@ -65,14 +64,14 @@ export class RoleRepository implements IRoleRepository {
   async findAll(): Promise<Role[]> {
     const docs = await RoleModel.find().lean();
     const roles = await Promise.all(
-      docs.map(async doc => {
+      docs.map(async (doc) => {
         const permissions = await Promise.all(
-          doc.permissions.map(permId => this.permissionRepo.findById(permId))
+          doc.permissions.map((permId) => this.permissionRepo.findById(permId))
         );
         return new Role(
-          doc._id.toString(), 
-          doc.name, 
-          permissions.filter(p => p !== null)
+          doc._id.toString(),
+          doc.name,
+          permissions.filter((p) => p !== null)
         );
       })
     );

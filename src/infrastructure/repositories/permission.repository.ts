@@ -5,7 +5,6 @@ import { PermissionModel } from "../database/permission.model";
 export class PermissionRepository implements IPermissionRepository {
   async create(permission: Permission): Promise<Permission> {
     const doc = await PermissionModel.create({
-      _id: permission.id,
       action: permission.action,
       description: permission.description,
     });
@@ -43,6 +42,8 @@ export class PermissionRepository implements IPermissionRepository {
 
   async findAll(): Promise<Permission[]> {
     const docs = await PermissionModel.find().lean();
-    return docs.map(doc => new Permission(doc._id.toString(), doc.action, doc.description));
+    return docs.map(
+      (doc) => new Permission(doc._id.toString(), doc.action, doc.description)
+    );
   }
 }

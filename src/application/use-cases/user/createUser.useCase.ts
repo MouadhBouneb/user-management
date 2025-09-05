@@ -20,7 +20,6 @@ export class CreateUserUseCase {
 
     const email = Email.create(createUserDto.email);
     const password = await Password.create(createUserDto.password);
-
     // Fetch Role entities from IDs
     const roles = [];
     if (createUserDto.roles) {
@@ -29,7 +28,6 @@ export class CreateUserUseCase {
         if (role) roles.push(role);
       }
     }
-
     // Fetch Permission entities from IDs
     const permissions = [];
     if (createUserDto.permissions) {
@@ -38,7 +36,6 @@ export class CreateUserUseCase {
         if (permission) permissions.push(permission);
       }
     }
-
     const user = new User(
       uuidv4(),
       email,

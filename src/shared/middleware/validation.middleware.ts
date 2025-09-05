@@ -17,7 +17,7 @@ export const validateBody = (schema: ZodSchema) => {
         });
         return; // stop execution
       }
-      next(error);
+      return next(error);
     }
   };
 };
@@ -35,7 +35,7 @@ export const validateParams = (schema: ZodSchema) => {
         });
         return; // stop execution
       }
-      next(error);
+      return next(error);
     }
   };
 };

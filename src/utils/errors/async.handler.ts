@@ -1,8 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import ErrorHandler from "./error.handler";
-import { Logger } from "shared/services/logger.service";
+import { logger as Logger } from "shared/services/logger.service";
 
-tn;
 /**
  * A higher-order function to wrap async route handlers and catch errors
  * @param fn The async function to wrap

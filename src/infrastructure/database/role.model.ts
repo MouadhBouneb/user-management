@@ -1,6 +1,7 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document, Types } from "mongoose";
 
 export interface IRoleDoc extends Document {
+  _id: Types.ObjectId;
   name: string;
   permissions: string[];
 }

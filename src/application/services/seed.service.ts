@@ -19,16 +19,21 @@ export class SeedService {
 
   async seedPermissions(): Promise<Permission[]> {
     const permissions: Permission[] = [];
-    
+
     for (const [key, action] of Object.entries(PERMISSIONS)) {
       const existing = await this.permissionRepo.findByName(action);
       if (!existing) {
-        const permission = new Permission(uuidv4(), action, `Permission to ${action}`);
+        const permission = new Permission(
+          uuidv4(),
+          action,
+          `Permission to ${action}`
+        );
+        console.log("permission", permission);
         await this.permissionRepo.create(permission);
         permissions.push(permission);
       }
     }
-    
+
     return permissions;
   }
 
@@ -45,8 +50,8 @@ export class SeedService {
     }
 
     // User role with basic permissions
-    const userPermissions = allPermissions.filter(p => 
-      p.action.includes('read') || p.action === PERMISSIONS.USER_UPDATE
+    const userPermissions = allPermissions.filter(
+      (p) => p.action.includes("read") || p.action === PERMISSIONS.USER_UPDATE
     );
     const userRole = new Role(uuidv4(), ROLES.USER, userPermissions);
     const existingUser = await this.roleRepo.findByName(ROLES.USER);
@@ -59,21 +64,21 @@ export class SeedService {
   }
 
   async seedAdminUser(): Promise<User | null> {
-    const existing = await this.userRepo.findByEmail('admin@example.com');
+    const existing = await this.userRepo.findByEmail("admin@example.com");
     if (existing) return null;
 
     const adminRole = await this.roleRepo.findByName(ROLES.ADMIN);
-    if (!adminRole) throw new Error('Admin role not found');
+    if (!adminRole) throw new Error("Admin role not found");
 
-    const email = Email.create('admin@example.com');
-    const password = await Password.create('admin123');
-    
+    const email = Email.create("admin@example.com");
+    const password = await Password.create("admin123");
+
     const adminUser = new User(
       uuidv4(),
       email,
       password,
-      'Admin',
-      'User',
+      "Admin",
+      "User",
       undefined,
       undefined,
       [adminRole],
@@ -84,17 +89,17 @@ export class SeedService {
   }
 
   async seedAll(): Promise<void> {
-    console.log('🌱 Starting database seeding...');
-    
+    console.log("🌱 Starting database seeding...");
+
     await this.seedPermissions();
-    console.log('✅ Permissions seeded');
-    
+    console.log("✅ Permissions seeded");
+
     await this.seedRoles();
-    console.log('✅ Roles seeded');
-    
+    console.log("✅ Roles seeded");
+
     await this.seedAdminUser();
-    console.log('✅ Admin user seeded');
-    
-    console.log('🎉 Database seeding completed!');
+    console.log("✅ Admin user seeded");
+
+    console.log("🎉 Database seeding completed!");
   }
 }

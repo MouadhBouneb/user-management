@@ -1,6 +1,7 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, Document, Types } from "mongoose";
 
 export interface IPermissionDoc extends Document {
+  _id: Types.ObjectId;
   action: string; // like "USER_CREATE"
   description?: string;
 }

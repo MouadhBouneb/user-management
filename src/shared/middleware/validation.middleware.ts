@@ -8,15 +8,16 @@ export const validateBody = (schema: ZodSchema) => {
       next();
     } catch (error) {
       if (error instanceof z.ZodError) {
-        return res.status(400).json({
+        res.status(400).json({
           error: "Validation failed",
-          details: error.errors.map(err => ({
-            field: err.path.join('.'),
-            message: err.message
-          }))
+          details: error.issues.map((err: z.ZodIssue) => ({
+            field: err.path.join("."),
+            message: err.message,
+          })),
         });
+        return; // stop execution
       }
-      next(error);
+      return next(error);
     }
   };
 };
@@ -28,12 +29,13 @@ export const validateParams = (schema: ZodSchema) => {
       next();
     } catch (error) {
       if (error instanceof z.ZodError) {
-        return res.status(400).json({
+        res.status(400).json({
           error: "Invalid parameters",
-          details: error.errors
+          details: error.issues,
         });
+        return; // stop execution
       }
-      next(error);
+      return next(error);
     }
   };
 };

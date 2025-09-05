@@ -1,0 +1,21 @@
+{
+  "currentBranch": "bolt",
+  "branches": {
+    "main": {
+      "created": "2025-01-27T10:00:00Z",
+      "lastCommit": "initial-commit"
+    },
+    "bolt": {
+      "created": "2025-01-27T10:30:00Z",
+      "lastCommit": "initial-commit",
+      "parentBranch": "main"
+    }
+  },
+  "commits": {
+    "initial-commit": {
+      "message": "Initial commit with user management system",
+      "timestamp": "2025-01-27T10:00:00Z",
+      "author": "Developer"
+    }
+  }
+}
